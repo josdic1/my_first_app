@@ -11,6 +11,8 @@ export function ProductPage() {
     useEffect(() => {
         if (userCategories && userCategories.length > 0) {
             fetchProduct()
+        } else {
+               console.log('didnt find product')
         }
     }, [id, userCategories])
     
@@ -20,7 +22,7 @@ export function ProductPage() {
     }
 
     if (!selectedProduct) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>    
     }
 
     return (
