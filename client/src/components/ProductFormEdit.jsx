@@ -1,13 +1,11 @@
-import { useEffect, useContext } from "react"
+import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { useUser } from "../hooks/useUser"
-import { RecipeContext } from "../contexts/RecipeContext"
+import { useProduct } from "../hooks/useProduct"
 import { useFormikForm } from "../hooks/useFormikForm"
 import { productSchema } from "../validators/productValidation"
 
 export function ProductFormEdit() {
-    const { user, refreshUser } = useUser()
-    const { categories, updateProduct } = useContext(RecipeContext)
+    const { allCategories, userCategories, updateProduct } = useProduct()
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -19,25 +17,21 @@ export function ProductFormEdit() {
             user_id: ''
         },
         validationSchema: productSchema,
-        onSubmit: (values) => {
-            updateProduct(values)
-                .then(result => {
-                    if (result.error) {
-                        alert(result.error)
-                    } else {
-                        return refreshUser()
-                    }
-                })
-                .then(() => {
-                    navigate('/')
-                    form.resetForm()
-                })
+        onSubmit: async (values) => {
+            const result = await updateProduct(values)
+            
+            if (result.error) {
+                alert(result.error)
+            } else {
+                form.resetForm()
+                navigate('/')
+            }
         }
     })
 
     useEffect(() => {
-        if (user?.categories && id) {
-            const allProducts = user.categories.flatMap(cat => cat.products || [])
+        if (userCategories && userCategories.length > 0 && id) {
+            const allProducts = userCategories.flatMap(cat => cat.products || [])
             const selectedProduct = allProducts.find(product => product.id === parseInt(id))
             
             if (selectedProduct) {
@@ -47,7 +41,7 @@ export function ProductFormEdit() {
                 form.setFieldValue('user_id', selectedProduct.user_id)
             }
         }
-    }, [user?.categories, id])
+    }, [userCategories, id])
 
     return (
         <>
@@ -75,7 +69,7 @@ export function ProductFormEdit() {
                 onBlur={form.handleBlur}
             >
                 <option value="">Select a category</option>
-                {categories?.map(category => (
+                {allCategories?.map(category => (
                     <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
             </select>

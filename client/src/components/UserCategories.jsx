@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { CategoryItem } from "./CategoryItem";
+import { useProduct } from "../hooks/useProduct";
 
-export function UserCategories({ userCategories }) {
+export function UserCategories() {
+    const { userCategories } = useProduct()
     const [openCategory, setOpenCategory] = useState(null);
 
     if (!userCategories || userCategories.length === 0) {
@@ -15,7 +17,7 @@ export function UserCategories({ userCategories }) {
                     <button onClick={() => setOpenCategory(
                         openCategory === category.id ? null : category.id
                     )}>
-                        {category.name}
+                        {category.name} ({category.products.length})
                     </button>
                     
                     {openCategory === category.id && (

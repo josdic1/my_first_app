@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import NavBar from './components/NavBar'
-import { RecipeProvider } from './providers/RecipeProvider'
+import { ProductProvider } from './providers/ProductProvider'
 import { UserProvider } from './providers/UserProvider'
 
 
@@ -10,14 +10,14 @@ function App() {
   return (
     <>
     <UserProvider>
-      <RecipeProvider>
+      <ProductProvider>
     <header>
     <NavBar />
     </header>
       <main>
         <Outlet />
       </main>
-      </RecipeProvider>
+      </ProductProvider>
       </UserProvider>
     </>
   )

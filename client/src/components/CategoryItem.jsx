@@ -1,11 +1,11 @@
-import { useContext } from "react"
+
 import { useNavigate } from "react-router-dom"
-import { RecipeContext } from "../contexts/RecipeContext"
-import { UserContext } from "../contexts/UserContext"
+import {useProduct} from "../hooks/useProduct"
+
 
 export function CategoryItem({ product }) {
-  const { deleteProduct } = useContext(RecipeContext)
-    const { refreshUser } = useContext(UserContext)
+  const { deleteProduct } = useProduct()
+
     const navigate = useNavigate()
 
   const onClick = (e) => {
@@ -19,7 +19,6 @@ export function CategoryItem({ product }) {
         break;
       case 'delete':
         deleteProduct(product.id)
-          .then(() => refreshUser())  
           .then(() => navigate(`/`))  
         break;
       default:

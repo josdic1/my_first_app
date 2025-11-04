@@ -1,21 +1,22 @@
+import { Navigate } from "react-router-dom"
 import { useUser } from "../hooks/useUser"
-import { LoginPage } from "./LoginPage"
 import { UserCategories } from "../components/UserCategories"
 
-
 function HomePage() {
-    const { user } = useUser()
+    const { user, loading } = useUser()
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     if (!user?.id) {
-        return <LoginPage />
+        return <Navigate to="/login" replace />
     }
 
     return (
         <>
             <h1>Home Page</h1>
-            <UserCategories 
-                userCategories={user.categories || []}
-            />
+            <UserCategories />  
         </>
     )
 }

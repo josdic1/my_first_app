@@ -13,16 +13,19 @@ export function LoginPage() {
             password: ''
         },
         validationSchema: loginSchema,
-        onSubmit: (values) => {
-            login(values)
-                .then(result => {
-                    if (result.success) {
-                        navigate('/')
-                    } else {
-                        alert(result.error)
-                    }
-                })
-        }
+  onSubmit: async (values) => {
+    console.log('Submitting login form with:', values)
+    const result = await login(values)
+    console.log('Login result:', result)
+
+    if (result.success) {
+        console.log('Success! Navigating to /')
+        navigate('/', { replace: true })
+    } else {
+        console.log('Failed:', result.error)
+        alert(result.error)
+    }
+}
     })
 
     const onAutofill = () => {
@@ -31,7 +34,6 @@ export function LoginPage() {
     }
 
     return (
-        <>
         <form onSubmit={form.handleSubmit}>
             <h2>Login Form</h2>
             <input type='button' onClick={onAutofill} value="Autofill"/>
@@ -67,6 +69,5 @@ export function LoginPage() {
             <button type='submit'>Login</button>
             <button type='button' onClick={() => form.resetForm()}>Clear</button>
         </form>
-        </>
     )
 }

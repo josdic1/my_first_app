@@ -1,39 +1,34 @@
-import { useEffect, useContext } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useUser } from "../hooks/useUser"
-import { RecipeContext } from "../contexts/RecipeContext"
+import { useProduct } from "../hooks/useProduct"
 import { CategoryFormNew } from "./CategoryFormNew"
 import { Modal } from "./Modal"
 import { useFormikForm } from "../hooks/useFormikForm"
 import { productSchema } from "../validators/productValidation"
-import { useState } from "react"
+
 
 export function ProductFormNew() {
-    const { user, refreshUser } = useUser()
-    const { categories, createProduct } = useContext(RecipeContext)
+    const { user } = useUser()
+    const { allCategories, createProduct } = useProduct()  // ✅ Changed from categories to allCategories
     const [showModal, setShowModal] = useState(false)
     const navigate = useNavigate()
 
     const form = useFormikForm({
         initialValues: {
             name: '',
-            category_id: '',
-            user_id: ''
+            category_id: ''
         },
         validationSchema: productSchema,
-        onSubmit: (values) => {
-            createProduct(values)
-                .then(result => {
-                    if (result.error) {
-                        alert(result.error)
-                    } else {
-                        return refreshUser()
-                    }
-                })
-                .then(() => {
-                    navigate('/')
-                    form.resetForm()
-                })
+        onSubmit: async (values) => {  
+            const result = await createProduct(values)
+            
+            if (result.error) {
+                alert(result.error)
+            } else {
+                form.resetForm()
+                navigate('/')
+            }
         }
     })
 
@@ -74,7 +69,7 @@ export function ProductFormNew() {
                 onBlur={form.handleBlur}
             >
                 <option value="">Select a category</option>
-                {categories?.map(category => (
+                {allCategories?.map(category => (  // ✅ Changed from categories to allCategories
                     <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
             </select>

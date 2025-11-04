@@ -1,10 +1,10 @@
-import { useContext } from "react"
-import { RecipeContext } from "../contexts/RecipeContext"
+
 import { useFormikForm } from "../hooks/useFormikForm"
 import { categorySchema } from "../validators/productValidation"
+import { useProduct } from "../hooks/useProduct"
 
 export function CategoryFormNew({ onSubmit }) {
-    const { createCategory } = useContext(RecipeContext)
+    const { createCategory } = useProduct()
 
     const form = useFormikForm({
         initialValues: { name: '' },

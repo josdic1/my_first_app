@@ -182,18 +182,10 @@ def check_session():
 
 # Categories #
 
-@app.route('/categories/all', methods=['GET'])
+@app.route('/categories', methods=['GET'])
 def get_all_categories():
     categories = Category.query.all()
     return jsonify(categories_schema.dump(categories))
-
-@app.route('/categories', methods=['GET'])
-def get_user_categories():
-    if 'user_id' not in session:
-        return jsonify({"error": "Login required"}), 401
-    user = User.query.get(session['user_id'])
-    user_categories = [category_schema.dump(cat) for cat in user.categories]
-    return jsonify(categories_schema.dump(user_categories))
 
 @app.route('/categories/new', methods=['POST'])
 def create_category():
