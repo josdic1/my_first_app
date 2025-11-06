@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom"
-import { useUser } from "../hooks/useUser"
+import { useApp } from "../hooks/useApp"
 
 
 function NavBar() {
-    const { loading, user, logout } = useUser()
+    const { loading, user, logout } = useApp()
 return (
 <>
 {!user?.id || loading ? 

@@ -1,10 +1,10 @@
 
 import { useNavigate } from "react-router-dom"
-import {useProduct} from "../hooks/useProduct"
+import { useApp } from "../hooks/useApp"
 
 
 export function CategoryItem({ product }) {
-  const { deleteProduct } = useProduct()
+  const { deleteProduct } = useApp()
 
     const navigate = useNavigate()
 

@@ -1,9 +1,9 @@
 import { useParams, useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useProduct } from "../hooks/useProduct";
+import { useApp } from "../hooks/useApp"
 
 export function ProductPage() {
-    const { userCategories, deleteProduct } = useProduct()
+    const { userCategories, deleteProduct } = useApp()
     const [selectedProduct, setSelectedProduct] = useState(null)
     const navigate = useNavigate()
     const { id } = useParams()

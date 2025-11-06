@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import { useUser } from "../hooks/useUser"
+import { useApp } from "../hooks/useApp"
 import { useFormikForm } from "../hooks/useFormikForm"
 import { loginSchema } from "../validators/productValidation"
 
 export function LoginPage() {
-    const { login } = useUser()
+    const { login } = useApp()
     const navigate = useNavigate()
 
     const form = useFormikForm({
@@ -14,30 +14,35 @@ export function LoginPage() {
         },
         validationSchema: loginSchema,
   onSubmit: async (values) => {
-    console.log('Submitting login form with:', values)
+    // console.log('Submitting login form with:', values)
     const result = await login(values)
-    console.log('Login result:', result)
+    // console.log('Login result:', result)
 
     if (result.success) {
-        console.log('Success! Navigating to /')
+        // console.log('Success! Navigating to /')
         navigate('/', { replace: true })
     } else {
-        console.log('Failed:', result.error)
+        // console.log('Failed:', result.error)
         alert(result.error)
     }
 }
     })
 
-    const onAutofill = () => {
+    const onAutofillJosh = () => {
         form.setFieldValue('name', 'josh')
+        form.setFieldValue('password', '1111')
+    }
+
+     const onAutofillDor = () => {
+        form.setFieldValue('name', 'dor')
         form.setFieldValue('password', '1111')
     }
 
     return (
         <form onSubmit={form.handleSubmit}>
             <h2>Login Form</h2>
-            <input type='button' onClick={onAutofill} value="Autofill"/>
-            
+            <button type='button' onClick={onAutofillJosh}> Login Josh</button>
+              <button type='button' onClick={onAutofillDor}> Login Dor</button>
             <p>
                 <input 
                     type="text" 

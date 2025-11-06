@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom"
-import { useUser } from "../hooks/useUser"
+import { useApp } from "../hooks/useApp"
 import { UserCategories } from "../components/UserCategories"
 
 function HomePage() {
-    const { user, loading } = useUser()
+    const { user, loading } = useApp()
 
     if (loading) {
         return <div>Loading...</div>

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { CategoryItem } from "./CategoryItem";
-import { useProduct } from "../hooks/useProduct";
+import { useApp } from "../hooks/useApp"
 
 export function UserCategories() {
-    const { userCategories } = useProduct()
+    const { userCategories } = useApp()
     const [openCategory, setOpenCategory] = useState(null);
 
     if (!userCategories || userCategories.length === 0) {

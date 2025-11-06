@@ -1,10 +1,9 @@
-
 import { useFormikForm } from "../hooks/useFormikForm"
 import { categorySchema } from "../validators/productValidation"
-import { useProduct } from "../hooks/useProduct"
+import { useApp } from "../hooks/useApp"
 
 export function CategoryFormNew({ onSubmit }) {
-    const { createCategory } = useProduct()
+    const { createCategory } = useApp()
 
     const form = useFormikForm({
         initialValues: { name: '' },
@@ -13,7 +12,7 @@ export function CategoryFormNew({ onSubmit }) {
             createCategory(values)
                 .then(result => {
                     if (!result.error && result.data) {
-                        onSubmit(result.data.id)
+                        onSubmit(result.data)  // ✅ Pass the full object, not just the ID
                     } else {
                         alert('Error creating category')
                     }
@@ -38,3 +37,6 @@ export function CategoryFormNew({ onSubmit }) {
         </form>
     )
 }
+
+
+
